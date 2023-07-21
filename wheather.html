@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather API App</title>
+        <link rel="stylesheet" href="weather.css">
+    </head>
+    <body>
+        <div class="card">
+            <div class="search">
+                <input type="text" placeholder="Enter city name" spellcheck="false">
+                <button id="abc">Search</button>
+            </div>
+            <div class="weather">
+                <img src="C:\Users\vasan\OneDrive\Documents\New folder\images\wheather.html\rain img.png" class="weather-icon">
+                <h1 class="temp">22°c</h1>
+                <h2 class="city">New York</h2>
+                <div class="details">
+                    <div class="col">
+                        <img src="C:\Users\vasan\OneDrive\Documents\New folder\images\wheather.html\humidity img.png">
+                        <div>
+                            <p class="humidity">50%</p>
+                            <p>Humidity</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img src="https://www.vippng.com/png/detail/49-498453_windy-weather-icon-wind-weather-symbol.png">
+                        <div>
+                            <p class="wind">15 km/h</p>
+                            <p>Wind Speed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+             const apikey =  "c65cafcadc22c132fc18052670506855"; // Replace with your actual API key
+             const apiUrl ="https://api.openweathermap.org/data/2.5/weather?unit=metric&q="; 
+
+             const searchBox = document.querySelector(".search input");
+             const searchBtn = document.querySelector(".search button");
+             const weatherIcon = document.querySelector(".weather-icon");
+
+              async function checkWeather(city){
+                const response = await fetch(apiUrl + city + `&appid=${apikey}`);
+                var data = await response.json();
+
+                console.log(data);
+                document.querySelector(".city").innerHTML = data.name;
+                document.querySelector(".temp").innerHTML = data.main.temp +"°c";
+                document.querySelector(".humidity").innerHTML = data.main.humidity +"%";
+                document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+
+                if (data.weather[0].main == "Clouds"){
+                    weatherIcon.src="https://th.bing.com/th/id/R.eaa179706cfa9d3db5c3cde42711cf2e?rik=0Jtg5lPU%2bbTybg&riu=http%3a%2f%2fwww.psdgraphics.com%2ffile%2fblue-clouds-icon.jpg&ehk=E3xlQ7FMdjTRWvYFBUt0SRzOlnZsOg1jRS6Q857Fkqo%3d&risl=&pid=ImgRaw&r=0";
+                }
+                else if(data.weather[0].main == "Clear"){
+                    weatherIcon.src = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpurepng.com%2Fpublic%2Fuploads%2Flarge%2Fpurepng.com-weather-iconsymbolsiconsapple-iosiosios-8-iconsios-8-721522596142qx4ep.png&f=1&nofb=1&ipt=f38b90ed2d16142060d497234830547b7459098ca56d438fa20d3b89903401d7&ipo=images";
+                
+                }
+                else if(data.weather[0].main == "Rain"){
+                    weatherIcon.src = "C:\Users\vasan\OneDrive\Documents\New folder\images\wheather.html\rain img.png";
+                   
+                  } 
+                  else if(data.weather[0].main == "Dreizzle" ){
+                    weatherIcon.querySelector ="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.thenounproject.com%2Fpng%2F78321-200.png&f=1&nofb=1&ipt=914a49cb52c7cfa85d5b106aa81332e27ad29b22f3a0e18389e5425aef9b783e&ipo=images"; 
+                  }
+                  else if(data.weather[0].main == "Mist"){
+                    weatherIcon.src = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.N98IjOaqVZQarjlrE_wPJwHaHa%26pid%3DApi&f=1&ipt=980333e16748314abae38c52b3536ed0d91d0df41ec8320a9f4e279b4a2b34a0&ipo=images";
+                  }
+                
+                }
+
+              searchBtn.addEventListener("click", ()=>{
+                checkWeather(searchBox.value);
+              })
+
+
+               // Voice input
+       /* const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+
+        recognition.addEventListener("result", (event) => {
+            const transcript = event.results[0][0].transcript.trim();
+            searchInput.value = transcript;
+            checkWeather(transcript);
+        });
+
+        recognition.addEventListener("end", () => {
+            searchBtn.disabled = false;
+        });
+
+        searchInput.addEventListener("focus", () => {
+            recognition.start();
+            searchBtn.disabled = true;
+        });*/
+
+        </script>
+
+    </body>
+    </html>
+    
